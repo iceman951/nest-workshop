@@ -10,6 +10,8 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth/auth.service";
 import { CreateUserDto } from "./dtos/create-user.dto";
+import { LoginUserDto } from "./dtos/login-user.dto";
+import { UpdateUserDto } from "./dtos/update-user.dto";
 import { UsersService } from "./users.service";
 
 @Controller("auth")
@@ -27,6 +29,12 @@ export class UsersController {
       body.firstName,
       body.lastName
     );
+    return user;
+  }
+
+  @Post("/login")
+  async logIn(@Body() body: LoginUserDto) {
+    const user = await this.authService.logIn(body.email, body.password);
     return user;
   }
 
@@ -54,6 +62,9 @@ export class UsersController {
     return user;
   }
 
-  //   @Patch()
-  //   async updateInfo
+  @Patch("/:id")
+  async update(@Param("id") id: string, @Body() body: UpdateUserDto) {
+    const user = await this.userService.editUser(parseInt(id), body);
+    return user;
+  }
 }
