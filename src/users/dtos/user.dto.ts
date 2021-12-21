@@ -1,15 +1,15 @@
-import { Exclude } from "class-transformer";
+import { Expose } from "class-transformer";
 
-export class User {
-  @Exclude()
+export class UserDto {
+  @Expose()
   id: number;
 
-  @Exclude()
+  @Expose()
   email: string;
 
-  @Exclude()
+  @Expose()
   firstName: string;
 
-  @Exclude()
+  @Expose()
   lastName: string;
 }

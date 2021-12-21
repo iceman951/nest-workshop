@@ -21,4 +21,9 @@ export class User {
   @Exclude()
   @Column()
   password: string;
+
+  @Column({ default: 0 })
+  discountId: number;
+
+  // checkInZoneId: number[];
 }

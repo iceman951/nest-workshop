@@ -14,12 +14,16 @@ import {
 } from "@nestjs/common";
 import { AuthGuard } from "src/guards/auth.guard";
 import { AuthService } from "./auth/auth.service";
+import { CurrentUser } from "./decorators/current-user.decorator";
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { LoginUserDto } from "./dtos/login-user.dto";
 import { UpdateUserDto } from "./dtos/update-user.dto";
+import { User } from "./users.entity";
+import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
 
 @UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(CurrentUserInterceptor)
 @Controller("auth")
 export class UsersController {
   constructor(
@@ -28,8 +32,10 @@ export class UsersController {
   ) {}
 
   @Get("/me")
-  me(@Session() session: any) {
-    const user = this.usersService.findById(session.userId);
+  me(@CurrentUser() currentUser: User) {
+    const user = currentUser;
+    // console.log(currentUser);
+
     return user;
   }
 
