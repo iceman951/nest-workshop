@@ -18,10 +18,7 @@ export class CouponController {
 
   @Serialize(CouponDto)
   @Post()
-  createCoupon(
-    @Body() body: CreateCouponDto,
-    @CurrentUser() currentUser: User
-  ) {
-    return this.couponService.create(body, currentUser);
+  createCoupon(@Body() body: CreateCouponDto) {
+    return this.couponService.create(body, body.visitorId);
   }
 }

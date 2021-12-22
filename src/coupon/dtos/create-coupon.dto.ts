@@ -6,6 +6,9 @@ export class CreateCouponDto {
   @Min(0)
   discount: number;
 
+  @IsNumber()
+  visitorId: number;
+
   //   @IsBoolean()
   //   isUsed: boolean;
 }

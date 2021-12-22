@@ -12,6 +12,7 @@ import { CurrentUserMiddleware } from "./middlewares/current-user.middleware";
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
   providers: [UsersService, AuthService],
+  exports: [UsersService],
 })
 export class UsersModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,20 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/users/users.entity";
+import { UsersService } from "src/users/users.service";
 import { Repository } from "typeorm";
 import { Coupon } from "./coupon.entity";
 import { CreateCouponDto } from "./dtos/create-coupon.dto";
 
 @Injectable()
 export class CouponService {
-  constructor(@InjectRepository(Coupon) private repo: Repository<Coupon>) {}
+  constructor(
+    @InjectRepository(Coupon) private repo: Repository<Coupon>,
+    private usersService: UsersService
+  ) {}
 
-  create(couponDto: CreateCouponDto, user: User) {
+  async create(couponDto: CreateCouponDto, visitorId: number) {
     const coupon = this.repo.create(couponDto);
+    const user = await this.usersService.findById(visitorId);
     coupon.user = user;
-    console.log(coupon);
-
     return this.repo.save(coupon);
-    // return null;
   }
 }
