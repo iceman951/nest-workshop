@@ -1,5 +1,6 @@
 import { Exclude } from "class-transformer";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Coupon } from "src/coupon/coupon.entity";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -22,8 +23,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: 0 })
-  discountId: number;
+  @OneToOne(() => Coupon, (coupon) => coupon.user)
+  coupon: Coupon;
 
-  // checkInZoneId: number[];
+  // @ManyToMany(() => Zone, (zone) => zone.users)
+  // @JoinTable()
+  // zones: Zone[];
 }

@@ -10,4 +10,7 @@ export class Zone {
 
   @Column()
   detail: string;
+
+  // @ManyToMany(() => User, (user) => user.zones)
+  // users: User[];
 }

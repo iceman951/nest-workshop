@@ -34,8 +34,6 @@ export class UsersController {
   @Get("/me")
   me(@CurrentUser() currentUser: User) {
     const user = currentUser;
-    // console.log(currentUser);
-
     return user;
   }
 
