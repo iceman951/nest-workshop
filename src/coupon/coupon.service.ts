@@ -20,6 +20,10 @@ export class CouponService {
     const coupon = this.repo.create(couponDto);
     const user = await this.usersService.findById(visitorId);
 
+    const amountZones = await this.usersService.countZones(visitorId);
+    if (amountZones < 3)
+      throw new BadRequestException("must check-in more than 2 zones");
+
     const coupons = await this.repo.find({
       relations: ["user"],
       where: {

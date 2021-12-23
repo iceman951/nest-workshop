@@ -62,6 +62,12 @@ export class UsersController {
     session.userId = null;
   }
 
+  @Get("/zones")
+  async getAmountCheckedInZones(@CurrentUser() currentUser: User) {
+    const checkedInZones = await this.usersService.countZones(currentUser.id);
+    return checkedInZones;
+  }
+
   @Get("/:id")
   async findById(@Param("id") id: string) {
     const user = await this.usersService.findById(parseInt(id));

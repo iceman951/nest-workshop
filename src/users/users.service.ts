@@ -61,4 +61,10 @@ export class UsersService {
     Object.assign(user, attrs);
     return this.repo.save(user);
   }
+
+  async countZones(userId: number) {
+    const user = await this.repo.findOne(userId, { relations: ["zones"] });
+    const checkedInZones = user.zones.length;
+    return checkedInZones;
+  }
 }
