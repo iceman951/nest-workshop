@@ -1,6 +1,14 @@
 import { Exclude } from "class-transformer";
 import { Coupon } from "src/coupon/coupon.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Zone } from "src/zones/zones.entity";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 export class User {
@@ -26,7 +34,7 @@ export class User {
   @OneToOne(() => Coupon, (coupon) => coupon.user)
   coupon: Coupon;
 
-  // @ManyToMany(() => Zone, (zone) => zone.users)
+  @ManyToMany(() => Zone, (zone) => zone.users)
   // @JoinTable()
-  // zones: Zone[];
+  zones: Zone[];
 }

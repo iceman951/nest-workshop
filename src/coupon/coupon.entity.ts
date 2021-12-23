@@ -3,7 +3,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -19,7 +18,7 @@ export class Coupon {
   @Column({ default: false })
   isUsed: boolean;
 
-  @OneToOne(() => User, (user) => user.coupon)
+  @OneToOne(() => User, (user) => user.coupon, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 }

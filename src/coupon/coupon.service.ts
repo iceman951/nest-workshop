@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/users/users.entity";
 import { UsersService } from "src/users/users.service";
@@ -16,6 +16,12 @@ export class CouponService {
   async create(couponDto: CreateCouponDto, visitorId: number) {
     const coupon = this.repo.create(couponDto);
     const user = await this.usersService.findById(visitorId);
+
+    // const coupons = await this.repo.find();
+    // if (coupons.length) {
+    //   throw new BadRequestException('coupon in use');
+    // }
+
     coupon.user = user;
     return this.repo.save(coupon);
   }

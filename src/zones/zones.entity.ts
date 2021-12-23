@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/users.entity";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 export class Zone {
@@ -11,6 +18,7 @@ export class Zone {
   @Column()
   detail: string;
 
-  // @ManyToMany(() => User, (user) => user.zones)
-  // users: User[];
+  @ManyToMany(() => User, (user) => user.zones)
+  @JoinTable()
+  users: User[];
 }
