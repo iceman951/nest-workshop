@@ -22,12 +22,10 @@ export class ZonesService {
     if (!zone) {
       throw new NotFoundException(`zoneId: ${zoneId} not found`);
     }
-    console.log(zone);
 
     if (zone.users.length) {
       zone.users.push(user);
     } else zone.users = [user];
-
     return this.repo.save(zone);
   }
 
