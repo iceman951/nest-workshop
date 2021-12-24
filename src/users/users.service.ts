@@ -67,4 +67,9 @@ export class UsersService {
     const checkedInZones = user.zones.length;
     return checkedInZones;
   }
+
+  async getCheckedInZones(userId: number) {
+    const user = await this.repo.findOne(userId, { relations: ["zones"] });
+    return user.zones;
+  }
 }

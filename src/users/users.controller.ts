@@ -65,6 +65,15 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard)
+  @Get("/my-zones")
+  async getMyCheckedInZones(@CurrentUser() currentUser: User) {
+    const mycheckedInZones = await this.usersService.getCheckedInZones(
+      currentUser.id
+    );
+    return mycheckedInZones;
+  }
+
+  @UseGuards(AuthGuard)
   @Get("/zones")
   async getAmountCheckedInZones(@CurrentUser() currentUser: User) {
     const checkedInZones = await this.usersService.countZones(currentUser.id);
