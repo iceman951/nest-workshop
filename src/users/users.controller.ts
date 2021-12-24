@@ -21,6 +21,8 @@ import { UpdateUserDto } from "./dtos/update-user.dto";
 import { User } from "./users.entity";
 import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
+import { StaffGuard } from "src/guards/staff.guard";
+import { AdminGuard } from "src/guards/admin.guard";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @UseInterceptors(CurrentUserInterceptor)
@@ -31,6 +33,7 @@ export class UsersController {
     private authService: AuthService
   ) {}
 
+  @UseGuards(AuthGuard)
   @Get("/me")
   me(@CurrentUser() currentUser: User) {
     const user = currentUser;
@@ -56,42 +59,46 @@ export class UsersController {
     return user;
   }
 
-  @UseGuards(AuthGuard)
   @Post("/logout")
   logout(@Session() session: any) {
     session.userId = null;
   }
 
+  @UseGuards(AuthGuard)
   @Get("/zones")
   async getAmountCheckedInZones(@CurrentUser() currentUser: User) {
     const checkedInZones = await this.usersService.countZones(currentUser.id);
     return checkedInZones;
   }
-
+  @UseGuards(StaffGuard)
   @Get("/:id")
   async findById(@Param("id") id: string) {
     const user = await this.usersService.findById(parseInt(id));
     return user;
   }
 
+  @UseGuards(StaffGuard)
   @Get()
   async findByEmail(@Query("email") email: string) {
     const user = await this.usersService.findByEmail(email);
     return user;
   }
 
+  @UseGuards(StaffGuard)
   @Delete("/:id")
   async deleteById(@Param("id") id: string) {
     const user = await this.usersService.deleteUserById(parseInt(id));
     return user;
   }
 
+  @UseGuards(StaffGuard)
   @Delete()
   async deleteByEmail(@Query("email") email: string) {
     const user = await this.usersService.deleteUserByEmail(email);
     return user;
   }
 
+  @UseGuards(AuthGuard)
   @Patch("/:id")
   async update(@Param("id") id: string, @Body() body: UpdateUserDto) {
     const user = await this.usersService.editUser(parseInt(id), body);

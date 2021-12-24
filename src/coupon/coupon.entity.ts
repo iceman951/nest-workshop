@@ -12,7 +12,10 @@ export class Coupon {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: "codenaja" })
+  code: string;
+
+  @Column({ default: 10 })
   discount: number;
 
   @Column({ default: false })
