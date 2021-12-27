@@ -22,7 +22,6 @@ import { User } from "./users.entity";
 import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
 import { StaffGuard } from "src/guards/staff.guard";
-import { AdminGuard } from "src/guards/admin.guard";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @UseInterceptors(CurrentUserInterceptor)
@@ -73,12 +72,14 @@ export class UsersController {
     return mycheckedInZones;
   }
 
+  //optoinal
   @UseGuards(AuthGuard)
-  @Get("/zones")
+  @Get("/amount-checked-in-zones")
   async getAmountCheckedInZones(@CurrentUser() currentUser: User) {
     const checkedInZones = await this.usersService.countZones(currentUser.id);
     return checkedInZones;
   }
+
   @UseGuards(StaffGuard)
   @Get("/:id")
   async findById(@Param("id") id: string) {
