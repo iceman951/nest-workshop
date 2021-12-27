@@ -1,6 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { UsersService } from "./users.service";
-import { Zone } from "../zones/zones.entity";
 
 describe("UsersService", () => {
   let service: UsersService;
@@ -13,7 +12,7 @@ describe("UsersService", () => {
     service = module.get<UsersService>(UsersService);
   });
 
-  it("can create an instance of users service", () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });
