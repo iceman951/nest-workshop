@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { User } from "src/users/users.entity";
-import { UsersService } from "src/users/users.service";
+import { User } from "../users/users.entity";
+import { UsersService } from "../users/users.service";
 import { ZonesService } from "./zones.service";
 
 describe("ZonesService", () => {

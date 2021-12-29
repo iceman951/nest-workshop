@@ -1,6 +1,6 @@
 import { Exclude } from "class-transformer";
-import { Coupon } from "src/coupon/coupon.entity";
-import { Zone } from "src/zones/zones.entity";
+import { Coupon } from "../coupon/coupon.entity";
+import { Zone } from "../zones/zones.entity";
 import {
   Column,
   Entity,

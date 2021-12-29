@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UsersService } from "src/users/users.service";
+import { UsersService } from "../users/users.service";
 import { Repository } from "typeorm";
 import { Coupon } from "./coupon.entity";
 import { CreateCouponDto } from "./dtos/create-coupon.dto";

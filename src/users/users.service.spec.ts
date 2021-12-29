@@ -1,15 +1,15 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { Coupon } from "src/coupon/coupon.entity";
-import { Zone } from "src/zones/zones.entity";
+import { Coupon } from "../coupon/coupon.entity";
+import { Zone } from "../zones/zones.entity";
 import {
   createConnection,
   getConnection,
   getRepository,
   Repository,
 } from "typeorm";
-import { User } from "./users.entity";
-import { UsersService } from "./users.service";
+import { User } from "../users/users.entity";
+import { UsersService } from "../users/users.service";
 
 describe("UsersService", () => {
   let service: UsersService;

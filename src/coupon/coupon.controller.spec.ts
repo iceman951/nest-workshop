@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { UsersService } from "src/users/users.service";
+import { UsersService } from "../users/users.service";
 import { CouponController } from "./coupon.controller";
 import { Coupon } from "./coupon.entity";
 import { CouponService } from "./coupon.service";

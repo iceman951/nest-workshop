@@ -12,7 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
-import { AuthGuard } from "src/guards/auth.guard";
+import { AuthGuard } from "../guards/auth.guard";
 import { AuthService } from "./auth/auth.service";
 import { CurrentUser } from "./decorators/current-user.decorator";
 import { CreateUserDto } from "./dtos/create-user.dto";
@@ -21,7 +21,7 @@ import { UpdateUserDto } from "./dtos/update-user.dto";
 import { User } from "./users.entity";
 import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
-import { StaffGuard } from "src/guards/staff.guard";
+import { StaffGuard } from "../guards/staff.guard";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @UseInterceptors(CurrentUserInterceptor)

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { StaffGuard } from "src/guards/staff.guard";
-import { Serialize } from "src/interceptors/serialize.intercepter";
+import { StaffGuard } from "../guards/staff.guard";
+import { Serialize } from "../interceptors/serialize.intercepter";
 import { CheckInZoneDto } from "./dtos/check-in-zone.dto";
 import { CreateZoneDto } from "./dtos/create-zone.dto";
 import { ZoneDto } from "./dtos/zone.dto";

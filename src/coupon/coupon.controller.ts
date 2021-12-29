@@ -1,7 +1,7 @@
 import { Body, Controller, Patch, Post, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "src/guards/auth.guard";
-import { StaffGuard } from "src/guards/staff.guard";
-import { Serialize } from "src/interceptors/serialize.intercepter";
+import { AuthGuard } from "../guards/auth.guard";
+import { StaffGuard } from "../guards/staff.guard";
+import { Serialize } from "../interceptors/serialize.intercepter";
 import { CouponService } from "./coupon.service";
 import { CouponDto } from "./dtos/coupon.dto";
 import { CreateCouponDto } from "./dtos/create-coupon.dto";

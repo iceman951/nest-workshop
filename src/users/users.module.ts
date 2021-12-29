@@ -4,7 +4,6 @@ import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
 import { User } from "./users.entity";
 import { AuthService } from "./auth/auth.service";
-import { ConfigService } from "@nestjs/config";
 import cookieSession = require("cookie-session");
 import { CurrentUserMiddleware } from "./middlewares/current-user.middleware";
 
