@@ -9,21 +9,27 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity()
 export class User {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty()
   @Column({ default: "visitor" })
   role: string;
 
+  @ApiProperty()
   @Column()
   firstName: string;
 
+  @ApiProperty()
   @Column()
   lastName: string;
 
+  @ApiProperty()
   @Column()
   email: string;
 
@@ -31,9 +37,11 @@ export class User {
   @Column()
   password: string;
 
+  @ApiProperty({ type: Coupon })
   @OneToOne(() => Coupon, (coupon) => coupon.user)
   coupon: Coupon;
 
+  @ApiProperty()
   @ManyToMany(() => Zone, (zone) => zone.users)
   // @JoinTable()
   zones: Zone[];

@@ -22,7 +22,10 @@ import { User } from "./users.entity";
 import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
 import { StaffGuard } from "../guards/staff.guard";
+import { ApiCreatedResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { UserDto } from "./dtos/user.dto";
 
+@ApiTags("Auth")
 @UseInterceptors(ClassSerializerInterceptor)
 @UseInterceptors(CurrentUserInterceptor)
 @Controller("auth")
@@ -40,6 +43,11 @@ export class UsersController {
   }
 
   @Post("/register")
+  @ApiResponse({
+    status: 201,
+    type: User,
+    description: "Creates new user object.",
+  })
   async register(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.register(
       body.email,
@@ -48,7 +56,7 @@ export class UsersController {
       body.lastName
     );
     session.userId = user.id;
-    return user;
+    return { success: true, message: "Register Success", data: user };
   }
 
   @Post("/login")
