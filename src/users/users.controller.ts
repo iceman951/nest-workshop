@@ -23,10 +23,9 @@ import { User } from "./users.entity";
 import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
 import { StaffGuard } from "../guards/staff.guard";
-import { ApiCreatedResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserDto } from "./dtos/user.dto";
-import { Zone } from "src/zones/zones.entity";
-import { CreateZoneDto } from "src/zones/dtos/create-zone.dto";
+import { CreateZoneDto } from "../zones/dtos/create-zone.dto";
 
 @ApiTags("Auth")
 @UseInterceptors(ClassSerializerInterceptor)

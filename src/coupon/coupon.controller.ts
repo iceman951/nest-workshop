@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post, UseGuards } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
-import { CurrentUser } from "src/users/decorators/current-user.decorator";
-import { User } from "src/users/users.entity";
+import { CurrentUser } from "../users/decorators/current-user.decorator";
+import { User } from "../users/users.entity";
 import { AuthGuard } from "../guards/auth.guard";
 import { StaffGuard } from "../guards/staff.guard";
 import { Serialize } from "../interceptors/serialize.intercepter";
