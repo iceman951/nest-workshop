@@ -17,4 +17,8 @@ export class UserDto {
   @ApiProperty()
   @Expose()
   lastName: string;
+
+  @ApiProperty()
+  @Expose()
+  role: string;
 }

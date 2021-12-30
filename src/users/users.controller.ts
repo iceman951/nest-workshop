@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -24,6 +25,8 @@ import { UsersService } from "./users.service";
 import { StaffGuard } from "../guards/staff.guard";
 import { ApiCreatedResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserDto } from "./dtos/user.dto";
+import { Zone } from "src/zones/zones.entity";
+import { CreateZoneDto } from "src/zones/dtos/create-zone.dto";
 
 @ApiTags("Auth")
 @UseInterceptors(ClassSerializerInterceptor)
@@ -37,6 +40,11 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Get("/me")
+  @ApiResponse({
+    status: 200,
+    type: UserDto,
+    description: "my information",
+  })
   me(@CurrentUser() currentUser: User) {
     const user = currentUser;
     return user;
@@ -46,7 +54,7 @@ export class UsersController {
   @ApiResponse({
     status: 201,
     type: User,
-    description: "Creates new user object.",
+    description: "Creates new user",
   })
   async register(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.register(
@@ -56,33 +64,58 @@ export class UsersController {
       body.lastName
     );
     session.userId = user.id;
-    return { success: true, message: "Register Success", data: user };
+    return { success: true, message: "Register Success", user: user };
   }
 
   @Post("/login")
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: UserDto,
+    description: "Login",
+  })
   async logIn(@Body() body: LoginUserDto, @Session() session: any) {
     const user = await this.authService.logIn(body.email, body.password);
     session.userId = user.id;
-    return user;
+    return {
+      success: true,
+      message: "Login Success",
+      user: user,
+    };
   }
 
   @Post("/logout")
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    description: "Logout, clear session",
+  })
   logOut(@Session() session: any) {
     session.userId = null;
+    return { success: true, message: "Logout Success" };
   }
 
   @UseGuards(AuthGuard)
   @Get("/my-zones")
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: [CreateZoneDto],
+    description: "get all my check-in zones",
+  })
   async getMyCheckedInZones(@CurrentUser() currentUser: User) {
-    const mycheckedInZones = await this.usersService.getCheckedInZones(
-      currentUser.id
-    );
-    return mycheckedInZones;
+    const myZones = await this.usersService.getCheckedInZones(currentUser.id);
+    return myZones;
   }
 
   //optoinal
   @UseGuards(AuthGuard)
-  @Get("/amount-checked-in-zones")
+  @Get("/my-amount-zones")
+  @ApiResponse({
+    status: 200,
+    type: Number,
+    description: "amount my check-in zones",
+  })
   async getAmountCheckedInZones(@CurrentUser() currentUser: User) {
     const checkedInZones = await this.usersService.countZones(currentUser.id);
     return checkedInZones;
@@ -90,6 +123,11 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Get("/:id")
+  @ApiResponse({
+    status: 200,
+    type: UserDto,
+    description: "get user by id",
+  })
   async findById(@Param("id") id: string) {
     const user = await this.usersService.findById(parseInt(id));
     return user;
@@ -97,6 +135,11 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Get()
+  @ApiResponse({
+    status: 200,
+    type: Number,
+    description: "get user by email",
+  })
   async findByEmail(@Query("email") email: string) {
     const user = await this.usersService.findByEmail(email);
     return user;
@@ -104,6 +147,11 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Delete("/:id")
+  @ApiResponse({
+    status: 200,
+    type: User,
+    description: "delete user by id",
+  })
   async deleteById(@Param("id") id: string) {
     const user = await this.usersService.deleteUserById(parseInt(id));
     return user;
@@ -111,6 +159,11 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Delete()
+  @ApiResponse({
+    status: 200,
+    type: User,
+    description: "delete user by email",
+  })
   async deleteByEmail(@Query("email") email: string) {
     const user = await this.usersService.deleteUserByEmail(email);
     return user;
@@ -118,6 +171,11 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Patch("/:id")
+  @ApiResponse({
+    status: 204,
+    type: User,
+    description: "patch user by id",
+  })
   async update(@Param("id") id: string, @Body() body: UpdateUserDto) {
     const user = await this.usersService.editUser(parseInt(id), body);
     return user;

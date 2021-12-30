@@ -83,7 +83,7 @@ describe("UsersController", () => {
 
   it("signin updates session object and returns user", async () => {
     const session = { userId: -10 };
-    const user = await controller.logIn(
+    const { user } = await controller.logIn(
       { email: "2@email.com", password: "12345" },
       session
     );
@@ -94,7 +94,7 @@ describe("UsersController", () => {
 
   it("signup returns a single user", async () => {
     const session = { userId: -10 };
-    const user = await controller.register(
+    const { user } = await controller.register(
       {
         email: "1@email.com",
         password: "12345",

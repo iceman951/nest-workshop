@@ -37,7 +37,7 @@ export class User {
   @Column()
   password: string;
 
-  @ApiProperty({ type: Coupon })
+  @ApiProperty()
   @OneToOne(() => Coupon, (coupon) => coupon.user)
   coupon: Coupon;
 
