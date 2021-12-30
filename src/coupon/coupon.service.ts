@@ -48,4 +48,25 @@ export class CouponService {
     coupon.isUsed = use;
     return this.repo.save(coupon);
   }
+
+  async getCouponByUserId(userId: number) {
+    const coupon = await this.repo.findOne({
+      relations: ["user"],
+      where: { id: userId },
+    });
+
+    if (!coupon) {
+      throw new NotFoundException("not found coupon");
+    }
+
+    const newCoupon = {
+      id: coupon.id,
+      code: coupon.code,
+      discount: coupon.discount,
+      isUsed: coupon.isUsed,
+      userId: coupon.user.id,
+    };
+
+    return newCoupon;
+  }
 }

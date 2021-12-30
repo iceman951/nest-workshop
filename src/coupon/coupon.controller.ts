@@ -1,5 +1,7 @@
-import { Body, Controller, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, UseGuards } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import { CurrentUser } from "src/users/decorators/current-user.decorator";
+import { User } from "src/users/users.entity";
 import { AuthGuard } from "../guards/auth.guard";
 import { StaffGuard } from "../guards/staff.guard";
 import { Serialize } from "../interceptors/serialize.intercepter";
@@ -35,5 +37,16 @@ export class CouponController {
   })
   updateIsUsed(@Body() body: UseCouponDto) {
     return this.couponService.updateIsUsedCoupon(body.couponId, body.use);
+  }
+
+  @Get("/me")
+  @ApiResponse({
+    status: 200,
+    type: Coupon,
+    description: "get my coupon",
+  })
+  async getMyCoupon(@CurrentUser() currentUser: User) {
+    const coupon = await this.couponService.getCouponByUserId(currentUser.id);
+    return coupon;
   }
 }
