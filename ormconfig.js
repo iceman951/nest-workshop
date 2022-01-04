@@ -1,5 +1,5 @@
 var dbConfig = {
-    synchronize: false,
+    synchronize: true,
     migrations: ['migrations/*.js'],
     cli: {
       migrationsDir: 'migrations',
@@ -9,16 +9,24 @@ var dbConfig = {
   switch (process.env.NODE_ENV) {
     case 'development':
       Object.assign(dbConfig, {
-        type: 'sqlite',
-        database: 'db.sqlite',
-        entities: ['**/*.entity.js'],
+        type: 'postgres',
+        host: process.env.POSTGRES_HOST,
+        port: process.env.POSTGRES_PORT,
+        username: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.POSTGRES_DATABASE,
+        entities: ["dist/**/*.entity.js"],
+        migrationsRun: false,
+        // ssl: {
+        //   rejectUnauthorized: false
+        // }
       });
       break;
     case 'test':
       Object.assign(dbConfig, {
         type: 'sqlite',
         database: 'test.sqlite',
-        entities: ['**/*.entity.ts'],
+        entities: ["dist/**/*.entity.js"],
         migrationsRun: true,
       });
       break;
@@ -26,7 +34,7 @@ var dbConfig = {
       Object.assign(dbConfig, {
         type: 'postgres',
         database: process.env.DATABASE_URL,
-        entities: ['**/*.entity.ts'],
+        entities: ["dist/**/*.entity.js"],
         migrationsRun: true,
         ssl: {
           rejectUnauthorized: false

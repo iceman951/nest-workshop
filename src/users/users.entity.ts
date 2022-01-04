@@ -4,7 +4,6 @@ import { Zone } from "../zones/zones.entity";
 import {
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
