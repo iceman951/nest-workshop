@@ -1,10 +1,12 @@
 import {
+  BadRequestException,
   Body,
   ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
   HttpCode,
+  HttpException,
   Param,
   Patch,
   Post,
@@ -23,9 +25,19 @@ import { User } from "./users.entity";
 import { CurrentUserInterceptor } from "./interceptors/current-user.interceptor";
 import { UsersService } from "./users.service";
 import { StaffGuard } from "../guards/staff.guard";
-import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { UserDto } from "./dtos/user.dto";
 import { CreateZoneDto } from "../zones/dtos/create-zone.dto";
+import { ExceptionDto } from "../dtos/exception.dto";
+import { LogoutUserDto } from "../users/dtos/logout-user.dto";
 
 @ApiTags("Auth")
 @UseInterceptors(ClassSerializerInterceptor)
@@ -39,21 +51,18 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Get("/me")
-  @ApiResponse({
-    status: 200,
-    type: UserDto,
-    description: "my information",
-  })
+  @ApiOkResponse({ type: UserDto, description: "Ok" })
+  @ApiForbiddenResponse({ description: "Forbidden" })
   me(@CurrentUser() currentUser: User) {
     const user = currentUser;
     return user;
   }
 
   @Post("/register")
-  @ApiResponse({
-    status: 201,
-    type: User,
-    description: "Creates new user",
+  @ApiCreatedResponse({ type: User, description: "Creates new user" })
+  @ApiBadRequestResponse({
+    type: ExceptionDto,
+    description: "Bad Request, email in use",
   })
   async register(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.register(
@@ -68,40 +77,28 @@ export class UsersController {
 
   @Post("/login")
   @HttpCode(200)
-  @ApiResponse({
-    status: 200,
-    type: UserDto,
-    description: "Login",
-  })
+  @ApiOkResponse({ type: UserDto, description: "Ok" })
+  @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })
+  @ApiBadRequestResponse({ type: ExceptionDto, description: "Bad Request" })
   async logIn(@Body() body: LoginUserDto, @Session() session: any) {
     const user = await this.authService.logIn(body.email, body.password);
     session.userId = user.id;
-    return {
-      success: true,
-      message: "Login Success",
-      user: user,
-    };
+    return user;
   }
 
   @Post("/logout")
   @HttpCode(200)
-  @ApiResponse({
-    status: 200,
-    description: "Logout, clear session",
-  })
+  @ApiOkResponse({ type: LogoutUserDto, description: "Ok" })
   logOut(@Session() session: any) {
     session.userId = null;
-    return { success: true, message: "Logout Success" };
+    return { message: "Logout Success" };
   }
 
   @UseGuards(AuthGuard)
   @Get("/my-zones")
   @HttpCode(200)
-  @ApiResponse({
-    status: 200,
-    type: [CreateZoneDto],
-    description: "get all my check-in zones",
-  })
+  @ApiOkResponse({ type: [CreateZoneDto], description: "Ok" })
+  @ApiForbiddenResponse({ description: "Forbidden" })
   async getMyCheckedInZones(@CurrentUser() currentUser: User) {
     const myZones = await this.usersService.getCheckedInZones(currentUser.id);
     return myZones;
@@ -110,11 +107,8 @@ export class UsersController {
   //optoinal
   @UseGuards(AuthGuard)
   @Get("/my-amount-zones")
-  @ApiResponse({
-    status: 200,
-    type: Number,
-    description: "amount my check-in zones",
-  })
+  @ApiOkResponse({ type: Number, description: "Ok" })
+  @ApiForbiddenResponse({ description: "Forbidden" })
   async getAmountCheckedInZones(@CurrentUser() currentUser: User) {
     const checkedInZones = await this.usersService.countZones(currentUser.id);
     return checkedInZones;
@@ -122,11 +116,9 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Get("/:id")
-  @ApiResponse({
-    status: 200,
-    type: UserDto,
-    description: "get user by id",
-  })
+  @ApiOkResponse({ type: UserDto, description: "Ok" })
+  @ApiForbiddenResponse({ description: "Forbidden" })
+  @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })
   async findById(@Param("id") id: string) {
     const user = await this.usersService.findById(parseInt(id));
     return user;
@@ -134,11 +126,9 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Get()
-  @ApiResponse({
-    status: 200,
-    type: Number,
-    description: "get user by email",
-  })
+  @ApiOkResponse({ type: Number, description: "Ok" })
+  @ApiForbiddenResponse({ description: "Forbidden" })
+  @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })
   async findByEmail(@Query("email") email: string) {
     const user = await this.usersService.findByEmail(email);
     return user;
@@ -146,11 +136,9 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Delete("/:id")
-  @ApiResponse({
-    status: 200,
-    type: User,
-    description: "delete user by id",
-  })
+  @ApiForbiddenResponse({ description: "Forbidden" })
+  @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })
+  @ApiOkResponse({ type: UserDto, description: "Ok" })
   async deleteById(@Param("id") id: string) {
     const user = await this.usersService.deleteUserById(parseInt(id));
     return user;
@@ -158,11 +146,9 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Delete()
-  @ApiResponse({
-    status: 200,
-    type: User,
-    description: "delete user by email",
-  })
+  @ApiForbiddenResponse({ description: "Forbidden" })
+  @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })
+  @ApiOkResponse({ type: UserDto, description: "Ok" })
   async deleteByEmail(@Query("email") email: string) {
     const user = await this.usersService.deleteUserByEmail(email);
     return user;
@@ -170,11 +156,9 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Patch("/:id")
-  @ApiResponse({
-    status: 204,
-    type: User,
-    description: "patch user by id",
-  })
+  @ApiForbiddenResponse({ description: "Forbidden" })
+  @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })
+  @ApiOkResponse({ type: UserDto, description: "Ok" })
   async update(@Param("id") id: string, @Body() body: UpdateUserDto) {
     const user = await this.usersService.editUser(parseInt(id), body);
     return user;
