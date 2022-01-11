@@ -15,8 +15,10 @@ async function bootstrap() {
     .setTitle("Event example")
     .setDescription("The events API description")
     .setVersion("1.0")
+    .addCookieAuth("optional-session-id")
     // .addTag("events")
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("documentation", app, document);
 

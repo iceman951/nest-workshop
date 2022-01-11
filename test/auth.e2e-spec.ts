@@ -66,6 +66,6 @@ describe("AppController (e2e)", () => {
       .send({ email, password })
       .expect(200);
 
-    expect(body.user.email).toEqual(email);
+    expect(body.email).toEqual(email);
   });
 });

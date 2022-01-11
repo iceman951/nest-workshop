@@ -27,6 +27,7 @@ import { UsersService } from "./users.service";
 import { StaffGuard } from "../guards/staff.guard";
 import {
   ApiBadRequestResponse,
+  ApiCookieAuth,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
@@ -50,6 +51,7 @@ export class UsersController {
   ) {}
 
   @UseGuards(AuthGuard)
+  // @ApiCookieAuth()
   @Get("/me")
   @ApiOkResponse({ type: UserDto, description: "Ok" })
   @ApiForbiddenResponse({ description: "Forbidden" })
@@ -116,6 +118,7 @@ export class UsersController {
 
   @UseGuards(StaffGuard)
   @Get("/:id")
+  @ApiCookieAuth()
   @ApiOkResponse({ type: UserDto, description: "Ok" })
   @ApiForbiddenResponse({ description: "Forbidden" })
   @ApiNotFoundResponse({ type: ExceptionDto, description: "Not Found" })

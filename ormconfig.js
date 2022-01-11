@@ -26,7 +26,7 @@ var dbConfig = {
       Object.assign(dbConfig, {
         type: 'sqlite',
         database: 'test.sqlite',
-        entities: ["dist/**/*.entity.js"],
+        entities: ['**/*.entity.ts'],
         migrationsRun: true,
       });
       break;

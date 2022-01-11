@@ -25,7 +25,7 @@ export class User {
   firstName: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ default: null })
   lastName: string;
 
   @ApiProperty()
