@@ -1,4 +1,4 @@
-FROM node:16 as developement
+FROM node:16-alpine as developement
 
 ENV NODE_ENV developement
 # ENV POSTGRES_HOST postgres
@@ -8,17 +8,19 @@ ENV NODE_ENV developement
 # ENV POSTGRES_PORT 5432
 
 WORKDIR /app
-COPY package*.json ./
+COPY . .
+
 RUN npm install
-COPY . /app
+# COPY . /app
 
 RUN npm run build
 
 # ---
 
-FROM node:16
+FROM node:16-alpine
 
-ENV NODE_ENV production
+ARG ARG_VAR=production
+ENV NODE_ENV=${ARG_VAR}}
 
 WORKDIR /app
 
@@ -27,6 +29,6 @@ COPY --from=developement /app/node_modules/ /app/node_modules/
 COPY --from=developement /app/dist/ /app/dist/
 COPY ./ormconfig.js /app
 
-EXPOSE 3000
+# EXPOSE 3000
 
-CMD ["node", "dist/src/main.js"]
+CMD ["npm", "run", "start:prod"]

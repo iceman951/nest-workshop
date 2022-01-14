@@ -15,7 +15,7 @@ var dbConfig = {
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DATABASE,
-        entities: ["dist/**/*.entity.js"],
+        entities: ['**/*.entity.{ts,js}'],
         migrationsRun: false,
         // ssl: {
         //   rejectUnauthorized: false

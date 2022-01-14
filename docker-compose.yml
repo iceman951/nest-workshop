@@ -2,9 +2,10 @@ version: "3.7"
 
 services:
   nest-app:
-    build:
-      dockerfile: Dockerfile
-      context: .
+    image: nest2
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: .
     depends_on:
       - postgres
     environment:
@@ -21,7 +22,12 @@ services:
     ports:
       - 5432:5432
     restart: always
+    volumes:
+      - .:/data
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: postgres-db
+
+# volumes:
+#   events-data:
