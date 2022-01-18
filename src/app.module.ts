@@ -7,6 +7,7 @@ import { APP_PIPE } from "@nestjs/core";
 import { ZonesModule } from "./zones/zones.module";
 import { CouponModule } from "./coupon/coupon.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import LogsMiddleware from "./middlewares/logs.middleware";
 const cookieSession = require("cookie-session");
 
 @Module({
@@ -39,7 +40,8 @@ export class AppModule {
       .apply(
         cookieSession({
           keys: [this.configService.get("COOKIE_KEY")],
-        })
+        }),
+        LogsMiddleware
       )
       .forRoutes("*");
   }
