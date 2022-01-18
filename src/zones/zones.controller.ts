@@ -44,8 +44,10 @@ export class ZonesController {
     type: [CreateZoneDto],
     description: "get all zones",
   })
-  getZones() {
-    const zones = this.zonesService.getAllZones();
-    return zones;
+  async getZones() {
+    const zones = await this.zonesService.getAllZones();
+    const res = { statusCode: 200, message: "test", data: zones };
+    // return { statusCode: 200, message: "test", data: zones };
+    return res;
   }
 }

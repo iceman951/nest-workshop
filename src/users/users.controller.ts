@@ -7,6 +7,7 @@ import {
   Get,
   HttpCode,
   HttpException,
+  Logger,
   Param,
   Patch,
   Post,
@@ -45,6 +46,8 @@ import { LogoutUserDto } from "../users/dtos/logout-user.dto";
 @UseInterceptors(CurrentUserInterceptor)
 @Controller("auth")
 export class UsersController {
+  private readonly logger = new Logger(UsersController.name);
+
   constructor(
     private usersService: UsersService,
     private authService: AuthService
@@ -56,7 +59,9 @@ export class UsersController {
   @ApiOkResponse({ type: UserDto, description: "Ok" })
   @ApiForbiddenResponse({ description: "Forbidden" })
   me(@CurrentUser() currentUser: User) {
+    this.logger.log("currentUser: " + JSON.stringify(currentUser));
     const user = currentUser;
+    this.logger.log("return: " + user);
     return user;
   }
 

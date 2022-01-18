@@ -29,8 +29,8 @@ export class ZonesService {
     return this.repo.save(zone);
   }
 
-  getAllZones() {
-    const zones = this.repo.find();
+  async getAllZones() {
+    const zones = await this.repo.find();
     return zones;
   }
 }

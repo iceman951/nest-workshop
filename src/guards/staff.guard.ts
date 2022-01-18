@@ -1,8 +1,12 @@
-import { CanActivate, ExecutionContext } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Logger } from "@nestjs/common";
 
 export class StaffGuard implements CanActivate {
+  private readonly logger = new Logger(StaffGuard.name);
+
   canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
+    this.logger.log(request.currentUser.role);
+
     if (!request.currentUser) {
       return false;
     }
