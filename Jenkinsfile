@@ -27,8 +27,9 @@ pipeline {
 			}
 		}
 
-        stage('Run Docker') {
+        stage('Run Containers') {
 			steps {
+                sh 'docker run --name postgres-container -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres'
 				sh 'docker run -d -p 3000:3000 iceman951/nestjs-app-for-jenkins'
 			}
 		}
