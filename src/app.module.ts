@@ -8,6 +8,8 @@ import { ZonesModule } from "./zones/zones.module";
 import { CouponModule } from "./coupon/coupon.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import LogsMiddleware from "./middlewares/logs.middleware";
+import { LoggerModule } from "./logger/mylogger.module";
+import { DbModule } from "./database/db.module";
 const cookieSession = require("cookie-session");
 
 @Module({
@@ -20,6 +22,8 @@ const cookieSession = require("cookie-session");
     UsersModule,
     ZonesModule,
     CouponModule,
+    LoggerModule,
+    DbModule,
   ],
   controllers: [AppController],
   providers: [
