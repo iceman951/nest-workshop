@@ -1,12 +1,10 @@
 import {
-  BadRequestException,
   Body,
   ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
   HttpCode,
-  HttpException,
   Logger,
   Param,
   Patch,
@@ -33,14 +31,12 @@ import {
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
 import { UserDto } from "./dtos/user.dto";
 import { CreateZoneDto } from "../zones/dtos/create-zone.dto";
 import { ExceptionDto } from "../dtos/exception.dto";
 import { LogoutUserDto } from "../users/dtos/logout-user.dto";
-import { Connection } from "typeorm";
 
 @ApiTags("Auth")
 @UseInterceptors(ClassSerializerInterceptor)
@@ -51,8 +47,7 @@ export class UsersController {
 
   constructor(
     private usersService: UsersService,
-    private authService: AuthService,
-    private conn: Connection
+    private authService: AuthService
   ) {}
 
   @UseGuards(AuthGuard)
@@ -61,12 +56,6 @@ export class UsersController {
   @ApiOkResponse({ type: UserDto, description: "Ok" })
   @ApiForbiddenResponse({ description: "Forbidden" })
   me(@CurrentUser() currentUser: User) {
-    const res = this.conn
-      .query("SELECT * FROM public.zone ORDER BY id ASC")
-      .then((res) => {
-        console.log(res);
-      });
-
     this.logger.log("currentUser: " + JSON.stringify(currentUser));
     const user = currentUser;
     this.logger.log("return: " + user);

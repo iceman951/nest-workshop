@@ -33,16 +33,28 @@ pipeline {
 		// 		sh 'docker run -d -p 3000:3000 iceman951/nestjs-app-for-jenkins'
 		// 	}
 		// }
+                // stage('Run Containers') {
+		// 	steps {
+        //         sh 'docker run --name postgres-container -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres'
+		// 		sh 'docker run -d -p 3000:3000 iceman951/nestjs-app-for-jenkins'
+		// 	}
+		// }
+        stage('Test') {
+            steps {
+                sh 'npm run test'
+                sh 'npm run test:e2e'
+            }
+        }
 
         stage('Compose up') {
 			steps {
-                sh 'docker-compose up'
+                sh 'docker-compose up -d'
 			}
 		}
     }
-    post {
-        always {
-            emailext body: 'test send email from jenkins pipeline', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-        }
-    }
+    // post {
+    //     always {
+    //         emailext body: 'test send email from jenkins pipeline', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+    //     }
+    // }
 }
