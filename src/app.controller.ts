@@ -19,9 +19,9 @@ export class AppController {
     // this.myLogger.warn("This Logging is warning");
     // this.myLogger.debug("This Logging is debug");
     // this.myLogger.verbose("This Logging is verbose");
-    this.myLogger.audit("sdsdfsd");
+    // this.myLogger.audit("sdsdfsd");
 
-    const queryData = await this.appService.getAllUsers();
+    // const queryData = await this.appService.getAllUsers();
 
     return this.appService.getHello();
   }
