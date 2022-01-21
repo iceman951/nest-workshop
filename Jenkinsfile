@@ -1,6 +1,8 @@
 pipeline {
     
-    agent any  
+    agent any
+
+    tools {nodejs "NodeJS 17.4.0"}
  
     stages {
  
@@ -18,12 +20,12 @@ pipeline {
             }
         }
  
-        stage('Yarn Build') {
+        stage('Build') {
             steps {
-                echo 'Yarn Build'
-                echo '******************************'
+                sh 'npm install'
+                sh 'npm run build'
             }
-        }
+            }  
  
         stage('Deploy') {
             steps{
