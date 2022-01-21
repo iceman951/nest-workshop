@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "iceman951/nestjs-app-for-jenkins"
-        registryCredential = 'iceman951'
+        DOCKERHUB_CREDENTIALS=credentials('iceman951')
         dockerImage = ''
     }
     
@@ -14,20 +14,22 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    sh 'docker build -t iceman951/nestjs-app-for-jenkins .'
                 }
             }
         }
 
-        stage('Deploy image') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+		stage('Login') {
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+			steps {
+				sh 'docker push iceman951/nestjs-app-for-jenkins'
+			}
+		}
 
         // stage('Cleaning up') {
         //     steps{
