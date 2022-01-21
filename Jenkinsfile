@@ -29,7 +29,7 @@ pipeline {
 
         stage('Run Docker') {
 			steps {
-				sh 'docker run -d -p 3000:3000 iceman951/nestjs-app-for-jenkins'
+				sh 'docker run -d -p 3000:3000 nestjs-app-for-jenkins'
 			}
 		}
     }
