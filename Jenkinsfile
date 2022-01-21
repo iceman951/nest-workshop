@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+    registry = "iceman951/nestjs-app-for-jenkins"
+    registryCredential = 'iceman951'
+    dockerImage = ''
+    }
     
     agent any  
  
@@ -10,18 +15,23 @@ pipeline {
                 echo '******************************'
             }
         }
- 
-        stage('Yarn Install') {
+
+        stage('Building Image'){
             steps {
-                echo 'Yarn Install'
+                echo 'Build Image'
                 echo '******************************'
+                script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
             }
         }
- 
-        stage('Yarn Build') {
-            steps {
-                echo 'Yarn Build'
-                echo '******************************'
+        stage('Deploy our image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
  
