@@ -19,15 +19,11 @@ pipeline {
             }
         }
 
-		stage('Login') {
+		stage('Login& Push Docker') {
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
+                sh 'docker push iceman951/nestjs-app-for-jenkins'
 
-		stage('Push') {
-			steps {
-				sh 'docker push iceman951/nestjs-app-for-jenkins'
 			}
 		}
 
