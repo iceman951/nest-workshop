@@ -1,45 +1,28 @@
 pipeline {
-    environment {
-    registry = "iceman951/nestjs-app-for-jenkins"
-    registryCredential = 'iceman951'
-    dockerImage = ''
-    }
+  agent any
     
-    agent any  
- 
-    stages {
- 
-        stage('Init'){
-            steps {
-                echo 'Init'
-                echo '******************************'
-            }
-        }
-
-        stage('Building Image'){
-            steps {
-                echo 'Build Image'
-                echo '******************************'
-                script {
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
-            }
-            }
-        }
-        stage('Deploy our image') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
- 
-        stage('Deploy') {
-            steps{
-                echo 'Deploy'
-                echo '******************************'
-            }
-        }
+  tools {nodejs "node"}
+    
+  stages {
+        
+    stage('Git') {
+      steps {
+        git 'https://github.com/****/****'
+      }
     }
+     
+    stage('Build') {
+      steps {
+        sh 'npm install'
+         sh '<<Build Command>>'
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'node test'
+      }
+    }
+  }
 }
