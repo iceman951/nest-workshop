@@ -1,28 +1,35 @@
 pipeline {
-  agent any
     
-  tools {nodejs "node"}
-    
-  stages {
-        
-    stage('Git') {
-      steps {
-        git 'https://github.com/iceman951/nest-workshop.git'
-      }
+    agent any  
+ 
+    stages {
+ 
+        stage('Init'){
+            steps {
+                echo 'Init'
+                echo '******************************'
+            }
+        }
+ 
+        stage('Yarn Install') {
+            steps {
+                echo 'Yarn Install'
+                echo '******************************'
+            }
+        }
+ 
+        stage('Yarn Build') {
+            steps {
+                echo 'Yarn Build'
+                echo '******************************'
+            }
+        }
+ 
+        stage('Deploy') {
+            steps{
+                echo 'Deploy'
+                echo '******************************'
+            }
+        }
     }
-     
-    stage('Build') {
-      steps {
-        sh 'npm install'
-         sh '<<Build Command>>'
-      }
-    }  
-    
-            
-    stage('Test') {
-      steps {
-        sh 'node test'
-      }
-    }
-  }
 }
