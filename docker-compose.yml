@@ -2,10 +2,10 @@ version: "3.7"
 
 services:
   nest-app:
-    # image: nest2
-    build:
-      dockerfile: Dockerfile
-      context: .
+    image: iceman951/nestjs-app-for-jenkins
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: .
     depends_on:
       - postgres
     environment:

@@ -11,13 +11,13 @@ pipeline {
  
     stages {
  
-        stage('Building image') {
-            steps{
-                script {
-                    sh 'docker build . -t iceman951/nestjs-app-for-jenkins'
-                }
-            }
-        }
+        // stage('Building image') {
+        //     steps{
+        //         script {
+        //             sh 'docker build . -t iceman951/nestjs-app-for-jenkins'
+        //         }
+        //     }
+        // }
 
 		// stage('Login& Push Docker') {
 		// 	steps {
