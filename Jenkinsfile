@@ -8,16 +8,6 @@ pipeline {
     agent any
 
     tools {nodejs "NodeJS 17.4.0"}
-
-    node('slave-01') {
-        steps {
-            sh 'npm install'
-            sh '********** run test **********'
-            sh 'npm run test'
-            sh '********** run test:e2e **********'
-            sh 'npm run test:e2e'
-        }
-    }
  
     stages {
 
@@ -30,7 +20,11 @@ pipeline {
         //         sh 'npm run test:e2e'
         //     }
         // }
- 
+        stage('Run Tests') {
+            steps {
+                build job: 'Run_Test_Job'
+            }
+        }
         // stage('Building image') {
         //     steps{
         //         script {
