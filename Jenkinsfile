@@ -9,17 +9,15 @@ pipeline {
 
     tools {nodejs "NodeJS 17.4.0"}
 
-            node('slave-01') {
-            stage('Run Tests') {
-                steps {
-                    sh 'npm install'
-                    sh '********** run test **********'
-                    sh 'npm run test'
-                    sh '********** run test:e2e **********'
-                    sh 'npm run test:e2e'
-                }
-            }
+    node('slave-01') {
+        steps {
+            sh 'npm install'
+            sh '********** run test **********'
+            sh 'npm run test'
+            sh '********** run test:e2e **********'
+            sh 'npm run test:e2e'
         }
+    }
  
     stages {
 
