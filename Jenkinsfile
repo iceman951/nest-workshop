@@ -20,9 +20,15 @@ pipeline {
         //         sh 'npm run test:e2e'
         //     }
         // }
-        stage('Run Tests') {
-            steps {
-                build job: 'Run_Test_Job'
+        node('slave-01') {
+            stage('Run Tests') {
+                steps {
+                    sh 'npm install'
+                    sh '********** run test **********'
+                    sh 'npm run test'
+                    sh '********** run test:e2e **********'
+                    sh 'npm run test:e2e'
+                }
             }
         }
  
