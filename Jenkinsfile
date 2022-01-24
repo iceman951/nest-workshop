@@ -1,7 +1,6 @@
 // def isSkip = true 
 
 pipeline {
-    parameters { booleanParam(name: 'isSkip', defaultValue: true, description: '') }
     environment {
         registry = "iceman951/nestjs-app-for-jenkins"
         DOCKERHUB_CREDENTIALS=credentials('iceman951')
@@ -9,6 +8,8 @@ pipeline {
     }
     
     agent any
+
+    parameters { booleanParam(name: 'isSkip', defaultValue: true, description: '') }
 
     tools {nodejs "NodeJS 17.4.0"}
  
