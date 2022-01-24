@@ -9,7 +9,7 @@ pipeline {
     
     agent any
 
-    parameters { booleanParam(name: 'isSkip', defaultValue: true, description: '') }
+    parameters { booleanParam(name: 'isSkip', defaultValue: false, description: '') }
 
     tools {nodejs "NodeJS 17.4.0"}
  
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Tests') {
             when {
-                expression { '${params.isSkip}' != true }
+                expression { '${params.isSkip}'}
             }
             steps {
                 build job: 'Run_Test_Pipeline'
@@ -36,7 +36,7 @@ pipeline {
         
         stage('Building image') {
             when {
-                expression { '${params.isSkip}' != true }
+                expression { '${params.isSkip}'}
             }
             steps{
                 script {
@@ -47,7 +47,7 @@ pipeline {
 
 		stage('Login& Push Docker') {
             when {
-                expression { '${params.isSkip}' != true }
+                expression { '${params.isSkip}'}
             }
 			steps {
                 script {
