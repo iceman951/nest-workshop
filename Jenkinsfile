@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Tests') {
             when {
-                expression { ${isSkip} != true }
+                expression { $params.isSkip != true }
             }
             steps {
                 build job: 'Run_Test_Pipeline'
@@ -36,7 +36,7 @@ pipeline {
         
         stage('Building image') {
             when {
-                expression { ${isSkip} != true }
+                expression { $params.isSkip != true }
             }
             steps{
                 script {
@@ -47,7 +47,7 @@ pipeline {
 
 		stage('Login& Push Docker') {
             when {
-                expression { ${isSkip} != true }
+                expression { $params.isSkip != true }
             }
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
