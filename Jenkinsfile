@@ -24,6 +24,14 @@ pipeline {
         //         sh 'npm run test:e2e'
         //     }
         // }
+        node('slave-01') {
+            stage('test') {
+                script {
+                    sh 'echo ice'
+                }
+            }
+        }
+
 
         stage('Run Tests') {
             when {
