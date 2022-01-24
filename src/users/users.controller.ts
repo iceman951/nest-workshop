@@ -51,7 +51,7 @@ export class UsersController {
   ) {}
 
   @UseGuards(AuthGuard)
-  // @ApiCookieAuth()
+  @ApiCookieAuth()
   @Get("/me")
   @ApiOkResponse({ type: UserDto, description: "Ok" })
   @ApiForbiddenResponse({ description: "Forbidden" })
