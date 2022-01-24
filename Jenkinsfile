@@ -5,7 +5,8 @@ pipeline {
         dockerImage = ''
     }
     
-    agent any
+    // agent any
+    agent { node { label 'slave-01' } }
 
     tools {nodejs "NodeJS 17.4.0"}
  
@@ -20,11 +21,13 @@ pipeline {
         //         sh 'npm run test:e2e'
         //     }
         // }
-        stage('Run Tests') {
-            steps {
-                build job: 'Run_Test_Job'
-            }
-        }
+
+        // stage('Run Tests') {
+        //     steps {
+        //         build job: 'Run_Test_Job'
+        //     }
+        // }
+        
         // stage('Building image') {
         //     steps{
         //         script {
