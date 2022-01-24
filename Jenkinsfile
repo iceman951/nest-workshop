@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Tests') {
             when {
-                expression { '${params.isSkip}' == 'true'}
+                expression { return '${params.isSkip}' == 'true'}
             }
             steps {
                 build job: 'Run_Test_Pipeline'
@@ -36,7 +36,7 @@ pipeline {
         
         stage('Building image') {
             when {
-                expression { '${params.isSkip}' == 'true'}
+                expression { return '${params.isSkip}' == 'true'}
             }
             steps{
                 script {
@@ -47,7 +47,7 @@ pipeline {
 
 		stage('Login& Push Docker') {
             when {
-                expression { '${params.isSkip}' == 'true'}
+                expression { return '${params.isSkip}' == 'true'}
             }
 			steps {
                 script {
