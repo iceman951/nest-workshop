@@ -1,3 +1,5 @@
+def isSkip = true 
+
 pipeline {
     environment {
         registry = "iceman951/nestjs-app-for-jenkins"
@@ -22,12 +24,18 @@ pipeline {
         // }
 
         stage('Run Tests') {
+            when {
+                expression { isSkip != true }
+            }
             steps {
                 build job: 'Run_Test_Pipeline'
             }
         }
         
         stage('Building image') {
+            when {
+                expression { isSkip != true }
+            }
             steps{
                 script {
                     sh 'docker build . -t iceman951/nestjs-app-for-jenkins'
@@ -36,6 +44,9 @@ pipeline {
         }
 
 		stage('Login& Push Docker') {
+            when {
+                expression { isSkip != true }
+            }
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push iceman951/nestjs-app-for-jenkins'
