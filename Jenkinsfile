@@ -9,7 +9,7 @@ pipeline {
     
     agent any
 
-    parameters { booleanParam(name: 'isSkip', defaultValue: true, description: '') }
+    parameters { string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION") }
 
     tools {nodejs "NodeJS 17.4.0"}
  
