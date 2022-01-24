@@ -27,21 +27,21 @@ pipeline {
             }
         }
         
-        stage('Building image') {
-            steps{
-                script {
-                    sh 'docker build . -t iceman951/nestjs-app-for-jenkins'
-                }
-            }
-        }
+        // stage('Building image') {
+        //     steps{
+        //         script {
+        //             sh 'docker build . -t iceman951/nestjs-app-for-jenkins'
+        //         }
+        //     }
+        // }
 
-		stage('Login& Push Docker') {
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push iceman951/nestjs-app-for-jenkins'
+		// stage('Login& Push Docker') {
+		// 	steps {
+		// 		sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        //         sh 'docker push iceman951/nestjs-app-for-jenkins'
 
-			}
-		}
+		// 	}
+		// }
 
         // stage('Run Containers') {
 		// 	steps {
