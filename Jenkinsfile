@@ -10,7 +10,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION"),
+        string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION")
         string(name: "APPVERSION", defaultValue: "lastest", trim: false, description: "DESCRIPTION")
     }
 
