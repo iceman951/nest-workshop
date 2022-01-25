@@ -24,14 +24,6 @@ pipeline {
         //         sh 'npm run test:e2e'
         //     }
         // }
-        node('slave-01') {
-            stage('test') {
-                script {
-                    sh 'echo ice'
-                }
-            }
-        }
-
 
         stage('Run Tests') {
             when {
@@ -58,12 +50,8 @@ pipeline {
                 expression { return "${params.isSkip}" == 'true'}
             }
 			steps {
-                script {
-                    sh 'echo ${params.isSkip}'
-                }
 				// sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 // sh 'docker push iceman951/nestjs-app-for-jenkins'
-
 			}
 		}
 
