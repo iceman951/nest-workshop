@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   nest-app:
-    image: iceman951/nestjs-app-for-jenkins
+    image: iceman951/nestjs-app-for-jenkins:${APPVERSION}
     # build:
     #   dockerfile: Dockerfile
     #   context: .
@@ -15,7 +15,7 @@ services:
       POSTGRES_DATABASE: postgres-db
       POSTGRES_PORT: 5432
     ports:
-      - 3000:3000
+      - 3000:3000w
 
   postgres:
     image: postgres

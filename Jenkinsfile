@@ -10,6 +10,7 @@ pipeline {
     agent any
 
     parameters { string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION") }
+    parameters { string(name: "APPVERSION", defaultValue: "lastest", trim: false, description: "DESCRIPTION") }
 
     tools {nodejs "NodeJS 17.4.0"}
  
@@ -52,13 +53,14 @@ pipeline {
 
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push iceman951/nestjs-app-for-jenkins'
+                sh 'docker push iceman951/nestjs-app-for-jenkins:"${params.APPVERSION}'
 			}
 		}
 
         stage('Compose up') {
 			steps {
-                sh 'docker-compose up -d'
+                sh "export APPVERSION=${APPVERSION}"
+                sh "docker-compose up -d"
                 sh "echo ${params.isSkip}"
 			}
 		}
