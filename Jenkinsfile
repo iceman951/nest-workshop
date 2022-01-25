@@ -2,9 +2,9 @@
 
 pipeline {
     environment {
-        registry = "iceman951/nestjs-app-for-jenkins"
-        DOCKERHUB_CREDENTIALS=credentials('iceman951')
-        dockerImage = ''
+        registry = "iceman951/nestjs-app-for-jenkins" 
+        registryCredential = 'iceman951' 
+        dockerImage = '' 
     }
     
     agent any
@@ -64,7 +64,7 @@ pipeline {
 
         stage('Compose up') {
 			steps {
-                sh "export APPVERSION=${APPVERSION}"
+                sh "export APPVERSION=${params.APPVERSION}"
                 sh "docker-compose up -d"
                 sh "echo ${params.isSkip}"
 			}
