@@ -16,7 +16,7 @@ pipeline {
     // }
 
     tools {nodejs "NodeJS 17.4.0"}
- 
+    
     stages {
 
         stage('create namespace') {
@@ -76,7 +76,7 @@ pipeline {
         //         sh "echo ${params.isSkip}"
 		// 	}
 		// }
-    }
+    
     // post {
     //     always {
     //         mail bcc: '',
@@ -96,5 +96,5 @@ pipeline {
     //         sh 'echo "For example, the Pipeline was previously failing but is now successful"'
     //         sh 'echo "... or the other way around :)"'
     //     }
-    // }
+    }
 }
