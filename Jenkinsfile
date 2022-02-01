@@ -24,7 +24,7 @@ pipeline {
                 withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.docker.internal:6443']) {
                     sh 'kubectl apply -f postgres-yaml/postgres-pv.yaml'
                     sh 'kubectl apply -f postgres-yaml/postgres-pvc.yaml'
-                    sh 'kubectl create secret postgres-secret --from-env-file=postgres-secret.txt'
+                    sh 'kubectl create secret postgres-secret --from-env-file=postgres-secret.txt -n nestjs'
                     sh 'kubectl apply -f postgres-yaml/postgres-deployment.yaml'
                     sh 'kubectl apply -f postgres-yaml/postgres-cluster-ip-service.yaml'
                     sh 'kubectl apply -f postgres-yaml/postgres-nodeport.yaml'
