@@ -20,14 +20,18 @@ pipeline {
     stages {
 
         stage('create pv') {
-            script {
-                kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml")
+            steps {
+                script {
+                    kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml")
+                }
             }
         }
 
-                stage('create pvc') {
-            script {
-                kubernetesDeploy(configs: "./postgres-yaml/postgres-pvc.yaml")
+        stage('create pvc') {
+            steps {
+                script {
+                    kubernetesDeploy(configs: "./postgres-yaml/postgres-pvc.yaml")
+                }
             }
         }
 
