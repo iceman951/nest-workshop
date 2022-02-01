@@ -28,10 +28,7 @@ spec:
               name: db-port # ชื่อของ ConfigMap
               key: POSTGRES_PORT # key ภายใน ConfigMap'
         - name: POSTGRES_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: db-host
-              key: POSTGRES_HOST
+          value: postgres-cluster-ip-service
         - name: POSTGRES_USER
           value: postgres
         - name: POSTGRES_DB
