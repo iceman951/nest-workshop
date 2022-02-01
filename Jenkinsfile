@@ -21,7 +21,7 @@ pipeline {
 
         stage('create namespace') {
             steps {
-                sh 'kubectl config view'
+                sh 'kubectl -help'
             }
         }
 
