@@ -22,18 +22,18 @@ pipeline {
         stage('create pv') {
             steps {
                 script {
-                    kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml")
+                    kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml", kubeconfigId: "mykubeconfig")
                 }
             }
         }
 
-        stage('create pvc') {
-            steps {
-                script {
-                    kubernetesDeploy(configs: "./postgres-yaml/postgres-pvc.yaml")
-                }
-            }
-        }
+        // stage('create pvc') {
+        //     steps {
+        //         script {
+        //             kubernetesDeploy(configs: "./postgres-yaml/postgres-pvc.yaml")
+        //         }
+        //     }
+        // }
 
         // stage('Run Tests') {
         //     steps {
