@@ -16,12 +16,18 @@ pipeline {
     // }
 
     tools {nodejs "NodeJS 17.4.0"}
-    
+
     stages {
 
-        stage('create namespace') {
+        stage('create pv') {
             script {
                 kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml")
+            }
+        }
+
+                stage('create pvc') {
+            script {
+                kubernetesDeploy(configs: "./postgres-yaml/postgres-pvc.yaml")
             }
         }
 
