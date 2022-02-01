@@ -22,7 +22,7 @@ pipeline {
         stage('create pv') {
             steps {
                 script {
-                    kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml", kubeconfigId: "mykubeconfig")
+                    kubernetesDeploy(configs: "postgres-yaml/postgres-pv.yaml", kubeconfigId: "mykubeconfig")
                 }
             }
         }
