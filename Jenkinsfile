@@ -20,15 +20,10 @@ pipeline {
     stages {
 
         stage('create pv') {
-            // steps {
-            //     script {
-            //         kubernetesDeploy(configs: "postgres-yaml/postgres-pv.yaml", kubeconfigId: "mykubeconfig")
-            //     }
-            // }
             steps {
                 withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.docker.internal:6443']) {
                     sh 'kubectl apply -f postgres-yaml/postgres-pv.yaml'
-            }
+                }
             }
         }
 
