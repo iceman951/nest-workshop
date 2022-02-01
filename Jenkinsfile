@@ -21,7 +21,7 @@ pipeline {
 
         stage('create namespace') {
             steps {
-                sh 'kubectl create namespace nestjs'
+                sh 'kubectl create namespaces nestjs'
             }
         }
 
