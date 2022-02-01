@@ -25,8 +25,10 @@ pipeline {
             //         kubernetesDeploy(configs: "postgres-yaml/postgres-pv.yaml", kubeconfigId: "mykubeconfig")
             //     }
             // }
-            withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.docker.internal:6443']) {
-                sh 'kubectl apply -f postgres-yaml/postgres-pv.yaml'
+            steps {
+                withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.docker.internal:6443']) {
+                    sh 'kubectl apply -f postgres-yaml/postgres-pv.yaml'
+            }
             }
         }
 
