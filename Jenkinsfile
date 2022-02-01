@@ -20,8 +20,8 @@ pipeline {
     stages {
 
         stage('create namespace') {
-            steps {
-                sh 'kubectl create namespace nestjs'
+            script {
+                kubernetesDeploy(configs: "./postgres-yaml/postgres-pv.yaml")
             }
         }
 
