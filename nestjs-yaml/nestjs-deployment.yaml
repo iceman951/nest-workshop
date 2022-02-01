@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-deployment
+  namespace: nestjs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nestjs-deployment
+  template:
+    metadata:
+      labels:
+        app: nestjs-deployment
+    spec:
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: docker-credential
+      containers:
+      - image: iceman951/nestjs-for-kube:1.0
+        name: nestjs-deployment
+        ports:
+        - containerPort: 3000
+        env: # เพิ่มในส่วนของ env เพื่อเพิ่ม ENV ให้กับ container
+        - name: POSTGRES_PORT # ชื่อของ ENV
+          valueFrom: # จะเอาข้อมูลมาจากที่ไหน
+            configMapKeyRef: # จาก ConfigMap
+              name: db-port # ชื่อของ ConfigMap
+              key: POSTGRES_PORT # key ภายใน ConfigMap'
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-host
+              key: POSTGRES_HOST
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: mysecretpassword

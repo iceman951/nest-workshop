@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nestjs-ingress
+  namespace: nestjs
+spec:
+  ingressClassName: nginx
+  rules: # ส่วนของการกำหนด Rule ให้กับ Ingress
+  - host: "api.backend.xyz" # Hostname ที่จะให้ User เข้าใช้งาน
+    http:
+      paths:
+      - path: / # Path ที่จะให้เข้ามาใช้งาน Pod
+        pathType: Prefix # ประเภทของการ Match Path
+        backend: # ส่วนของการระบุ Service ที่จะให้นำทางไปยัง Pod
+          service:
+            name: nestjs-cluster-ip-service # ชื่อของ Service
+            port:
+              number: 3000 #  Port ของ Service
