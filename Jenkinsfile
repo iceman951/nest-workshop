@@ -10,14 +10,20 @@ pipeline {
     
     agent any
 
-    parameters {
-        string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION")
-        string(name: "APPVERSION", defaultValue: "lastest", trim: false, description: "DESCRIPTION")
-    }
+    // parameters {
+    //     string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION")
+    //     string(name: "APPVERSION", defaultValue: "lastest", trim: false, description: "DESCRIPTION")
+    // }
 
     tools {nodejs "NodeJS 17.4.0"}
  
     stages {
+
+        stage('create namespace') {
+            steps {
+                sh 'kubectl create namespace nestjs'
+            }
+        }
 
         // stage('Run Tests') {
         //     steps {
@@ -38,30 +44,30 @@ pipeline {
         //     }
         // }
         
-        stage('Building image') {
-            when {
-                expression { return "${params.isSkip}" == 'true'}
-            }
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":${params.APPVERSION}"
-                }
-            }
-        }
+        // stage('Building image') {
+        //     when {
+        //         expression { return "${params.isSkip}" == 'true'}
+        //     }
+        //     steps{
+        //         script {
+        //             dockerImage = docker.build registry + ":${params.APPVERSION}"
+        //         }
+        //     }
+        // }
 
-		stage('Push to DockerHub') {
-            when {
-                expression { return "${params.isSkip}" == 'true'}
-            }
+		// stage('Push to DockerHub') {
+        //     when {
+        //         expression { return "${params.isSkip}" == 'true'}
+        //     }
 
-			steps {
-                script {
-                    docker.withRegistry( '', registryCredential ) { 
-                        dockerImage.push()
-                    }
-                }
-			}
-		}
+		// 	steps {
+        //         script {
+        //             docker.withRegistry( '', registryCredential ) { 
+        //                 dockerImage.push()
+        //             }
+        //         }
+		// 	}
+		// }
 
         // stage('Compose up') {
 		// 	steps {
