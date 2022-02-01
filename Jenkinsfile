@@ -12,7 +12,7 @@ pipeline {
 
     parameters {
         string(name: "isSkip", defaultValue: "true", trim: false, description: "DESCRIPTION")
-        string(name: "APPVERSION", defaultValue: "lastest", trim: false, description: "DESCRIPTION")
+        // string(name: "APPVERSION", defaultValue: "lastest", trim: false, description: "DESCRIPTION")
     }
 
     tools {nodejs "NodeJS 17.4.0"}
@@ -29,14 +29,14 @@ pipeline {
         //     }
         // }
 
-        stage('Run Tests') {
-            when {
-                expression { return "${params.isSkip}" == 'true'}
-            }
-            steps {
-                build job: 'Run_Test_Pipeline'
-            }
-        }
+        // stage('Run Tests') {
+        //     when {
+        //         expression { return "${params.isSkip}" == 'true'}
+        //     }
+        //     steps {
+        //         build job: 'Run_Test_Pipeline'
+        //     }
+        // }
         
         stage('Building image') {
             when {
@@ -63,13 +63,13 @@ pipeline {
 			}
 		}
 
-        stage('Compose up') {
-			steps {
-                // sh "export APPVERSION=${params.APPVERSION}"
-                sh "docker-compose up -d"
-                sh "echo ${params.isSkip}"
-			}
-		}
+        // stage('Compose up') {
+		// 	steps {
+        //         // sh "export APPVERSION=${params.APPVERSION}"
+        //         sh "docker-compose up -d"
+        //         sh "echo ${params.isSkip}"
+		// 	}
+		// }
     }
     post {
         always {
