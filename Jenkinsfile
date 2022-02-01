@@ -77,24 +77,24 @@ pipeline {
 		// 	}
 		// }
     }
-    post {
-        always {
-            mail bcc: '',
-            body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ALWAYS CI: Project name -> ${env.JOB_NAME}", to: "k.vorrapong.dev@gmail.com";
-        }
-        success {
-            sh 'echo "This will run only if successful"'
-        }
-        failure {
-                sh 'echo "This will run only if failed"'
-        }
-        unstable {
-            sh 'echo "This will run only if the run was marked as unstable"'
-        }
-        changed {
-            sh 'echo "This will run only if the state of the Pipeline has changed"'
-            sh 'echo "For example, the Pipeline was previously failing but is now successful"'
-            sh 'echo "... or the other way around :)"'
-        }
-    }
+    // post {
+    //     always {
+    //         mail bcc: '',
+    //         body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ALWAYS CI: Project name -> ${env.JOB_NAME}", to: "k.vorrapong.dev@gmail.com";
+    //     }
+    //     success {
+    //         sh 'echo "This will run only if successful"'
+    //     }
+    //     failure {
+    //             sh 'echo "This will run only if failed"'
+    //     }
+    //     unstable {
+    //         sh 'echo "This will run only if the run was marked as unstable"'
+    //     }
+    //     changed {
+    //         sh 'echo "This will run only if the state of the Pipeline has changed"'
+    //         sh 'echo "For example, the Pipeline was previously failing but is now successful"'
+    //         sh 'echo "... or the other way around :)"'
+    //     }
+    // }
 }
