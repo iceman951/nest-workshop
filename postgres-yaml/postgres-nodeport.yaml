@@ -10,7 +10,7 @@ spec:
   - port: 5432
     protocol: TCP
     targetPort: 5432
-    nodePort: 30300 # กำหนดหมายเลข NodePort (30000-32767)
+    nodePort: 30543 # กำหนดหมายเลข NodePort (30000-32767)
   selector:
     app: postgres-deployment
   type: NodePort # เพิ่มเติมในส่วนของประเภทให้เป็น NodePort
