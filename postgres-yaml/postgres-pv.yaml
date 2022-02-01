@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgresql-pv
-  # namespace: nestjs
+  namespace: nestjs
 spec:
   storageClassName: postgresql-sc
   capacity:
