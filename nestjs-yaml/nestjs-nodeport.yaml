@@ -10,7 +10,7 @@ spec:
   - port: 3000
     protocol: TCP
     targetPort: 3000
-    nodePort: 30333 # กำหนดหมายเลข NodePort (30000-32767)
+    # nodePort: 30333 # กำหนดหมายเลข NodePort (30000-32767)
   selector:
     app: nestjs-deployment
   type: NodePort # เพิ่มเติมในส่วนของประเภทให้เป็น NodePort
